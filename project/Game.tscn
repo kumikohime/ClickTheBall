@@ -1,0 +1,111 @@
+[gd_scene load_steps=14 format=3 uid="uid://s72wdioqf6ex"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_nyoxe"]
+[ext_resource type="Texture2D" uid="uid://b4h2wu2fy14ea" path="res://assets/img/bg.png" id="2_m2egp"]
+[ext_resource type="AudioStream" uid="uid://c16q2x6fotuy6" path="res://assets/sfx/002_we-lost.wav" id="2_tue24"]
+[ext_resource type="PackedScene" uid="uid://4ctek65x6jqg" path="res://components/AudioStreamShuffler2D/AudioStreamShuffler2D.tscn" id="3_00rtt"]
+[ext_resource type="PackedScene" uid="uid://dxuxsyx0vecs" path="res://scenes/Ball/Ball.tscn" id="3_wu7tn"]
+[ext_resource type="AudioStream" uid="uid://c7odbvq5h5jbl" path="res://assets/sfx/001_we-lost.wav" id="4_xur0g"]
+[ext_resource type="AudioStream" uid="uid://bcyh6q0p4mwlm" path="res://assets/sfx/003_we-lost.wav" id="5_xrql1"]
+[ext_resource type="PackedScene" uid="uid://dn06rh6wkybon" path="res://scenes/CatPaw/CatPaw.tscn" id="8_6mrk6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_k013m"]
+friction = 0.66
+bounce = 0.75
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6evtj"]
+size = Vector2(1396, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ywyg"]
+size = Vector2(1396, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i2krv"]
+size = Vector2(1396, 11)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f1m5h"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_nyoxe")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BG" type="TextureRect" parent="CanvasLayer"]
+offset_top = -400.0
+offset_right = 1280.0
+offset_bottom = 880.0
+texture = ExtResource("2_m2egp")
+expand_mode = 1
+
+[node name="Control" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="Score" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.729412, 0.85098, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.0588235, 0.266667, 0.796078, 1)
+theme_override_font_sizes/font_size = 32
+text = "Score"
+
+[node name="Control" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(564, 262)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="Ball" parent="." instance=ExtResource("3_wu7tn")]
+position = Vector2(568, 355)
+
+[node name="Bounds" type="StaticBody2D" parent="."]
+visible = false
+physics_material_override = SubResource("PhysicsMaterial_k013m")
+
+[node name="Top" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(538, -4.5)
+shape = SubResource("RectangleShape2D_6evtj")
+disabled = true
+
+[node name="Bottom" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(544, 657)
+shape = SubResource("RectangleShape2D_6ywyg")
+disabled = true
+
+[node name="Left" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(-2, 299)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_i2krv")
+
+[node name="Right" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(1148, 331)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_i2krv")
+
+[node name="GameOverRegion" type="Area2D" parent="."]
+position = Vector2(640, 880)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameOverRegion"]
+shape = SubResource("WorldBoundaryShape2D_f1m5h")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+
+[node name="VoiceOver" parent="." instance=ExtResource("3_00rtt")]
+streams = Array[AudioStream]([ExtResource("4_xur0g"), ExtResource("2_tue24"), ExtResource("5_xrql1")])
+
+[node name="CatPaw" parent="." instance=ExtResource("8_6mrk6")]
+visible = false

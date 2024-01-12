@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://dn06rh6wkybon"]
+
+[ext_resource type="Texture2D" uid="uid://bjpdrtgh7lmuo" path="res://assets/img/Cat_Paw256p.png" id="1_liw4a"]
+[ext_resource type="Script" path="res://scenes/CatPaw/CatPaw.gd" id="2_no43f"]
+
+[sub_resource type="Animation" id="Animation_o7wuk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1a7bg"]
+resource_name = "fade_out"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1eew5"]
+_data = {
+"RESET": SubResource("Animation_o7wuk"),
+"fade_out": SubResource("Animation_1a7bg")
+}
+
+[node name="CatPaw" type="Sprite2D"]
+position = Vector2(586, 361)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("1_liw4a")
+offset = Vector2(0, 20)
+script = ExtResource("2_no43f")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1eew5")
+}

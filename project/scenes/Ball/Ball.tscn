@@ -1,0 +1,71 @@
+[gd_scene load_steps=11 format=3 uid="uid://dxuxsyx0vecs"]
+
+[ext_resource type="Script" path="res://scenes/Ball/BallBody.gd" id="2_86ej2"]
+[ext_resource type="Texture2D" uid="uid://caxfxomnyi7c6" path="res://assets/img/Cat_Yarn300p.png" id="2_r4kev"]
+[ext_resource type="PackedScene" uid="uid://4ctek65x6jqg" path="res://components/AudioStreamShuffler2D/AudioStreamShuffler2D.tscn" id="3_lo3eu"]
+[ext_resource type="AudioStream" uid="uid://cjwgjy4qogrhf" path="res://assets/sfx/001_meow.wav" id="4_ug4ra"]
+[ext_resource type="AudioStream" uid="uid://blfc5m25fea28" path="res://assets/sfx/002_meow.wav" id="5_aunca"]
+[ext_resource type="AudioStream" uid="uid://bwurf85tfoya8" path="res://assets/sfx/007_meow.wav" id="6_couy5"]
+
+[sub_resource type="Animation" id="Animation_qvmdi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_g6ird"]
+resource_name = "squish"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.8, 0.8), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sb7rs"]
+_data = {
+"RESET": SubResource("Animation_qvmdi"),
+"squish": SubResource("Animation_g6ird")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_drqtf"]
+radius = 79.0
+
+[node name="RigidBody2D" type="RigidBody2D"]
+collision_layer = 2
+input_pickable = true
+mass = 0.1
+gravity_scale = 0.35
+linear_damp = 0.1
+script = ExtResource("2_86ej2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sb7rs")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-8, 10)
+texture = ExtResource("2_r4kev")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_drqtf")
+
+[node name="AudioStreamShuffler2D" parent="." instance=ExtResource("3_lo3eu")]
+streams = Array[AudioStream]([ExtResource("4_ug4ra"), ExtResource("5_aunca"), ExtResource("6_couy5")])
