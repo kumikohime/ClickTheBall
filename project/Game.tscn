@@ -30,25 +30,35 @@ script = ExtResource("1_nyoxe")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
 
-[node name="BG" type="TextureRect" parent="CanvasLayer"]
-offset_top = -400.0
-offset_right = 1280.0
-offset_bottom = 880.0
+[node name="BG" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(0, -228)
 texture = ExtResource("2_m2egp")
-expand_mode = 1
+centered = false
 
-[node name="Control" type="MarginContainer" parent="CanvasLayer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="Score" type="Label" parent="CanvasLayer/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="HighScore" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.729412, 0.85098, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.0588235, 0.266667, 0.796078, 1)
+theme_override_font_sizes/font_size = 32
+text = "Highscore 0"
+
+[node name="Score" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.729412, 0.85098, 1, 1)
@@ -56,31 +66,84 @@ theme_override_colors/font_shadow_color = Color(0.0588235, 0.266667, 0.796078, 1
 theme_override_font_sizes/font_size = 32
 text = "Score"
 
-[node name="Control" type="Control" parent="CanvasLayer/Control"]
+[node name="Anchor" type="Control" parent="CanvasLayer/MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="Start" type="Button" parent="CanvasLayer/MarginContainer/Anchor"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -94.5
+offset_top = -18.0
+offset_right = 94.5
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.729412, 0.85098, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.0588235, 0.266667, 0.796078, 1)
+theme_override_colors/font_hover_color = Color(0.0588235, 0.266667, 0.796078, 1)
+theme_override_colors/font_outline_color = Color(0.0588235, 0.266667, 0.796078, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 64
+action_mode = 0
+text = "Start"
+flat = true
+
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Credits" type="Label" parent="CanvasLayer/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.5
+offset_top = -14.0
+offset_right = 90.5
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.729412, 0.85098, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.0588235, 0.266667, 0.796078, 1)
+theme_override_font_sizes/font_size = 32
+text = "Dev by Kumi
+Art by Yuyu"
 
 [node name="SpawnPoint" type="Marker2D" parent="."]
-position = Vector2(564, 262)
+position = Vector2(637, 193)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
 
 [node name="Ball" parent="." instance=ExtResource("3_wu7tn")]
-position = Vector2(568, 355)
+position = Vector2(637, 193)
+input_pickable = false
+freeze = true
+
+[node name="AudioListener2D" type="AudioListener2D" parent="Ball"]
+current = true
 
 [node name="Bounds" type="StaticBody2D" parent="."]
-visible = false
 physics_material_override = SubResource("PhysicsMaterial_k013m")
 
 [node name="Top" type="CollisionShape2D" parent="Bounds"]
-position = Vector2(538, -4.5)
+position = Vector2(630, -4)
 shape = SubResource("RectangleShape2D_6evtj")
 disabled = true
 
 [node name="Bottom" type="CollisionShape2D" parent="Bounds"]
-position = Vector2(544, 657)
+position = Vector2(608, 715)
 shape = SubResource("RectangleShape2D_6ywyg")
 disabled = true
 
@@ -90,11 +153,12 @@ rotation = 1.5708
 shape = SubResource("RectangleShape2D_i2krv")
 
 [node name="Right" type="CollisionShape2D" parent="Bounds"]
-position = Vector2(1148, 331)
+position = Vector2(1278, 327)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_i2krv")
 
 [node name="GameOverRegion" type="Area2D" parent="."]
+visible = false
 position = Vector2(640, 880)
 collision_layer = 0
 collision_mask = 2

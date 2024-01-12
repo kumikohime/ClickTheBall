@@ -4,8 +4,11 @@ extends AudioStreamPlayer2D
 
 func _ready():
 	_shuffle()
-	finished.connect(_shuffle)
 
+func shuffle_play(from_position: float = 0.0):
+	_shuffle()
+	play()
+	
 func _shuffle():
 	if not streams.is_empty():
 		var rand_idx = randi_range(0, streams.size() - 1)

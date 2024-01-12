@@ -47,11 +47,12 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_drqtf"]
 radius = 79.0
 
-[node name="RigidBody2D" type="RigidBody2D"]
+[node name="Ball" type="RigidBody2D"]
 collision_layer = 2
 input_pickable = true
 mass = 0.1
 gravity_scale = 0.35
+freeze = true
 linear_damp = 0.1
 script = ExtResource("2_86ej2")
 

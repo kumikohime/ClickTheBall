@@ -8,7 +8,7 @@ func _input_event(viewport, event: InputEvent, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 			bounce(event.global_position)
-			$AudioStreamShuffler2D.play()
+			$AudioStreamShuffler2D.shuffle_play()
 			clicked.emit()
 
 func bounce(pivot = global_position):
