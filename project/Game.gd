@@ -20,8 +20,8 @@ var score = 0:
 
 var highscore = 0:
 	set(v):
-		highscore = max(highscore, score)
-		highscore_label.text = "Highscorecore %d" % highscore
+		highscore = v
+		highscore_label.text = "Highscore %d" % highscore
 
 func _ready():
 	#timer.timeout.connect(_on_timer_timeout)
@@ -33,6 +33,9 @@ func _ready():
 func _on_game_over(body):
 	#collision layer 2 is player only, no need to check body
 	$VoiceOver.shuffle_play()
+	if score > highscore:
+		highscore = score
+	
 	await get_tree().create_timer(2).timeout
 	start_button.show()
 	my_ball.queue_free()
