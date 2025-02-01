@@ -90,9 +90,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 0
 focus_mode = 0
-theme_override_colors/font_color = Color(0.729412, 0.85098, 1, 1)
-theme_override_colors/font_pressed_color = Color(0.0588235, 0.266667, 0.796078, 1)
 theme_override_colors/font_hover_color = Color(0.0588235, 0.266667, 0.796078, 1)
+theme_override_colors/font_pressed_color = Color(0.0588235, 0.266667, 0.796078, 1)
+theme_override_colors/font_color = Color(0.729412, 0.85098, 1, 1)
 theme_override_colors/font_outline_color = Color(0.0588235, 0.266667, 0.796078, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 64
@@ -134,9 +134,11 @@ autostart = true
 [node name="Ball" parent="." instance=ExtResource("3_wu7tn")]
 position = Vector2(637, 193)
 input_pickable = false
+linear_damp = 0.0
+click_velocity = Vector2(0, -1000)
+incremental_grav_factor = 1.1
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Ball"]
-current = true
 
 [node name="Bounds" type="StaticBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_k013m")
