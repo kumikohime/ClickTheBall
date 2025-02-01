@@ -38,9 +38,15 @@ func _on_game_over(body):
 	
 	await get_tree().create_timer(2).timeout
 	start_button.show()
-	my_ball.queue_free()
-	spawn_ball()
+	reset()
 
+func reset():
+	my_ball.reset()
+	game_over.monitoring = false
+	my_ball.freeze = true
+	my_ball.linear_velocity = Vector2.ZERO
+	my_ball.move_to(spawn_point.global_position)
+	
 func spawn_ball():
 	my_ball = Ball.instantiate()
 	my_ball.global_position = spawn_point.global_position
@@ -50,10 +56,7 @@ func spawn_ball():
 func start():
 	score = 0
 
-	game_over.monitoring = false
-	my_ball.freeze = true
-	my_ball.linear_velocity = Vector2.ZERO
-	my_ball.global_position = spawn_point.global_position
+	reset()
 	remove_child(my_ball)
 	my_ball.freeze = false
 	my_ball.input_pickable = true
